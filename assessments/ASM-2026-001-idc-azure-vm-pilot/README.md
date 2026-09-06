@@ -31,6 +31,7 @@ Tomcat은 다른 port의 병행 JVM 없이 rolling하며, JWT Cookie를 사용�
 - [파일럿 검증 계획](evidence/pilot-validation-plan.md)
 - [결정 목록](decisions/README.md)
 - [중간 요약](reports/executive-brief.md)
+- [배포 절차 초안](reports/deployment-draft.md)
 - [역할 평가](evaluations/2026-09-07-discovery.md)
 - [이력](history/2026-09.md)
 
@@ -58,4 +59,4 @@ INTAKE는 대상·목적·미확인 항목이 식별되어 완료했다. DISCOVE
 2. Blob/Key Vault의 공용·사설 접근 정책 및 현재 App Gateway의 서비스별 pool/settings/probe 연결.
 3. JWT 서명·검증키 일관성, WebSocket/장시간 요청, 1대 수용 용량, 배포 버전 보존 개수와 복구 기준.
 
-후속 기록: [사용자 결정](decisions/DEC-2026-003-hosted-only-scope.md), [역할 평가](evaluations/2026-09-07-hosted-followup.md).
+후속 기록: [사용자 결정](decisions/DEC-2026-003-hosted-only-scope.md), [역할 평가](evaluations/2026-09-07-hosted-followup.md), [배포 절차 초안](reports/deployment-draft.md).
