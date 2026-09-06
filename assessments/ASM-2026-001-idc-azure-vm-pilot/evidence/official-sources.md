@@ -1,0 +1,61 @@
+# 공식 출처 및 증거 범위
+
+확인일: 2026-09-07. 공식 문서의 기능 설명을 확인했으며 실제 tenant/repo/VM에 접속해 설정·호환성·배포를 검증한 결과는 아니다.
+가격과 리전별 비용은 견적 입력 부족으로 산정하지 않았다. 아래 근거를 조합한 구조와 절차는 이 Assessment의 설계 제안이다.
+
+| ID | 공식 문서 | 확인한 내용 |
+|---|---|---|
+| S01 | [GitHub OIDC reference](https://docs.github.com/en/actions/reference/security/oidc) | repo/environment/branch subject, immutable ID 형식, subject customization |
+| S02 | [Azure Login with OIDC](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect) | Entra app 또는 UAMI의 federated credential과 azure/login |
+| S03 | [GitHub environments](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments) | 승인·branch 제한·self-review·bypass 및 custom rules |
+| S04 | [Azure DevOps WIF service connection](https://learn.microsoft.com/en-us/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops) | 개인 접근 권한과 연결의 workload identity·pipeline 사용 허가 구분 |
+| S05 | [Azure private networking for hosted runners](https://docs.github.com/en/organizations/managing-organization-settings/about-azure-private-networking-for-github-hosted-runners-in-your-organization) | larger runner의 VNet 및 IDC 접근, standard runner 제한 |
+| S06 | [Managed Run Command Linux](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/run-command-managed) | VM Agent 실행, timeout, 병렬 가능, instanceView/exitCode |
+| S07 | [Action Run Command Linux](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/run-command) | SSH 없이 실행, Agent outbound, 기본 elevated 실행, 시간·출력 제한 |
+| S08 | [Azure Compute permissions](https://learn.microsoft.com/en-us/azure/role-based-access-control/permissions/compute) | runCommand/action과 runCommands/read/write/delete 구분 |
+| S09 | [Azure Networking permissions](https://learn.microsoft.com/en-us/azure/role-based-access-control/permissions/networking) | Application Gateway 조회·backendhealth/action·write |
+| S10 | [AzCopy managed identity](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-authorize-managed-identity) | VM MI와 Blob Data Reader 다운로드 |
+| S11 | [Blob Entra authorization](https://learn.microsoft.com/en-us/azure/storage/blobs/authorize-access-azure-active-directory) | 데이터 접근 RBAC와 token 인증 |
+| S12 | [Application Gateway probes](https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-probe-overview) | unhealthy 대상 신규 트래픽 제외·복귀, probe 주기/threshold |
+| S13 | [Application Gateway backend HTTP settings](https://learn.microsoft.com/en-us/azure/application-gateway/configuration-http-settings) | 명시적 backend 제거의 connection drain, timeout·affinity 예외 |
+| S14 | [Application Gateway backend health](https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-backend-health) | pool/settings별 상태, 조회와 실제 probe 주기의 관계 |
+| S15 | [GitHub concurrency](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency) | repo 범위, cancel-in-progress, queue: max, 대기 순서 |
+| S16 | [Reusable workflow configurations](https://docs.github.com/en/actions/reference/workflows-and-actions/reusing-workflow-configurations) | caller의 context·runner·권한으로 실행 |
+| S17 | [GITHUB_TOKEN](https://docs.github.com/en/actions/concepts/security/github_token) | job token의 저장소 범위 및 수명 |
+| S18 | [Lease Blob](https://learn.microsoft.com/en-us/rest/api/storageservices/lease-blob) | Blob 쓰기·삭제 잠금, 유한·무기한 lease |
+| S19 | [Actions artifacts retention](https://docs.github.com/en/organizations/managing-organization-settings/configuring-the-retention-period-for-github-actions-artifacts-and-logs-in-your-organization) | 기간 기반 보존, private 상한 및 상위 정책 |
+| S20 | [Workflow artifacts](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflow-artifacts) | 산출물 전달·보관과 cache의 용도 차이 |
+| S21 | [Blob lifecycle policy structure](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-policy-structure) | 시간 기반 lifecycle 조건 |
+| S22 | [ACR artifact cache](https://learn.microsoft.com/en-us/azure/container-registry/artifact-cache-overview) | 컨테이너 upstream별 캐시 및 인증 조건 |
+| S23 | [Tomcat parallel deployment](https://tomcat.apache.org/tomcat-10.1-doc/config/context.html) | 같은 context의 여러 버전과 세션별 라우팅; 현재 버전 적용 여부 미확인 |
+| S24 | [NGINX control](https://nginx.org/en/docs/control.html) | reload 시 새 worker 및 구 worker graceful 종료 |
+| S25 | [Vite build](https://vite.dev/guide/build) | 이전 chunk 삭제 시 기존 브라우저 오류, HTML 캐시 |
+| S26 | [Vite troubleshooting](https://vite.dev/guide/troubleshooting) | version skew와 이전 chunk 보존; 실제 Vite 채택은 미확인 |
+| S27 | [VM managed identity token](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/how-to-use-vm-token) | VM 리소스가 MI 보안 경계 |
+| S28 | [Key Vault와 기존 자격증명 접근](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/tutorial-windows-managed-identities-vm-access) | Entra 미지원 대상은 비밀값이 남을 수 있음; Windows 튜토리얼의 인증 개념만 참조 |
+| S29 | [Copilot code review configuration](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/copilot-on-github/set-up-copilot/configure-code-review) | Copilot 조직 정책과 승인 설정; 배포 승인과 별도 |
+
+## 시점에 따른 주의사항
+
+- S01은 2026-07-15 이후 신규 repo와 rename/transfer에서 immutable owner/repo ID가 포함되는 subject를 설명한다. 과거 이름 기반 예시를 그대로 붙여 넣지 않고 실제 issuer/aud/sub를 확인한다.
+- S15는 `queue: max`를 제공한다. 과거의 'pending 한 개만 가능' 설명은 현재 기본값에 해당한다.
+- S06의 설명 중 권한 단수 표기가 있으므로 실제 custom role 정의는 S08의 provider operation `runCommands/*`와 대상 API를 기준으로 확인한다.
+- Copilot 승인 기능의 문서 간 갱신 시점 차이가 있어 '항상 comment만 가능'으로 단정하지 않는다. 이 파일럿은 사람의 운영 배포 승인을 별도로 두는 정책을 제안한다.
+
+## Hosted 전환 후속 조사
+
+확인일: 2026-09-07. 적용 시험과 구분한다.
+
+| ID | 공식 문서 | 확인한 내용 |
+|---|---|---|
+| S30 | [Key Vault security](https://learn.microsoft.com/en-us/azure/key-vault/general/secure-key-vault) | 비밀·키·인증서, 환경 분리 및 복구·감사 |
+| S31 | [Key Vault network security](https://learn.microsoft.com/en-us/azure/key-vault/general/network-security) | trusted services는 모든 hosted 실행을 포괄하지 않음 |
+| S32 | [Key Vault RBAC](https://learn.microsoft.com/en-us/azure/key-vault/general/rbac-guide) | 사용자·워크로드별 데이터 권한 |
+| S33 | [Application Gateway Key Vault certificates](https://learn.microsoft.com/en-us/azure/application-gateway/key-vault-certs) | UAMI, 인증서 secret URI 및 갱신 |
+| S34 | [GHCR](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) | GITHUB_TOKEN 및 패키지 접근 권한 |
+| S35 | [Container jobs](https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/run-jobs-in-a-container) | runner와 job container 구분 |
+| S36 | [Dependency caching](https://docs.github.com/en/actions/concepts/workflows-and-actions/dependency-caching) | 캐시와 산출물 구분, 원본 필요 |
+| S37 | [setup-node](https://github.com/actions/setup-node/blob/main/README.md) | 패키지 매니저 캐시와 node_modules 구분 |
+| S38 | [ACR Managed Identity](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-authentication-managed-identity) | Azure 워크로드의 이미지 pull 인증 |
+| S39 | [Storage private endpoints](https://learn.microsoft.com/en-us/azure/storage/common/storage-private-endpoints) | Private Endpoint와 공개 접근 차단 별도 |
+| S40 | [NGINX core module](https://nginx.org/en/docs/http/ngx_http_core_module.html) | root, open_file_cache, 심볼릭 링크 제약 |

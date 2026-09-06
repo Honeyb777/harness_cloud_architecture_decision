@@ -28,3 +28,9 @@ Cloud/IDC 내부 네트워크, 외부 시스템 연결, 망분리, Hybrid 구성
 - Cloud Architect는 전체 배치를 통합한다. Security는 접근 통제·인증을, Data는 데이터 정합성·복제를, 이 역할은 통신 경로와 네트워크 복원력을 담당한다.
 - 실제 방화벽·라우팅·회선·IDC 장비 변경은 설계 검토와 구분하고 해당 승인 정책을 따른다.
 - 사용 후 [역할 평가 정책](../sot/AGENT-LIFECYCLE.md)에 따라 평가한다.
+
+## 배포 트래픽과 제외 동작
+
+- OIDC 인증, ARM 제어 경로, runner/VM의 artifact 데이터 경로를 나눠 확인한다. 사설 리소스 접근은 별도 네트워크 조건이다.
+- health probe 실패, 신규 요청 제외, 명시적 backend 제거와 connection draining을 제품별 공식 동작에 따라 구분한다.
+- 서비스별 host/port/path와 pool/settings/probe 연결, affinity 및 장기 연결을 검증하고 일반 서비스 경로와 배포 marker 경로를 분리한다.

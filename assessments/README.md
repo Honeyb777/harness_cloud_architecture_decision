@@ -7,8 +7,9 @@
 
 | ID | 목적 / 범위 | 포함 환경 | Status | 현재 Step / Phase | 문서 |
 |---|---|---|---|---|---|
+| ASM-2026-001 | IDC 일부의 Azure VM 파일럿 CI/CD 이전 | IDC / Azure VM / GitHub Enterprise Cloud | IN_PROGRESS | STEP-01 / DISCOVERY | [검토 문서](ASM-2026-001-idc-azure-vm-pilot/README.md) |
 
-현재 실제 검토 건은 없다. 대상 미정으로 만들었던 초기 접수 문서는 [예시](../examples/initial-intake.md)로 옮겼다.
+현재 검토는 위 목록에서 선택한다. 과거 대상 미정으로 만들었던 초기 접수 문서는 [예시](../examples/initial-intake.md)로 옮겼다.
 
 ## 새 검토 시작
 
