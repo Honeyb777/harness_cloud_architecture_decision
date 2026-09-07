@@ -9,12 +9,11 @@ VM 두 대, 서비스 A/B는 설명용 식별자다. 서비스별 라우팅·부
 |---|---|---|---|
 | readiness/probe 실패 | unhealthy 대상으로 신규 요청 전달을 중단하고 건강 회복 시 재투입 | 파일/앱 readiness를 조합해 배포 대상 서비스의 신규 요청 제외 | probe 전파 중 요청, 처리 중 요청·세션·장기 연결을 별도 확인 |
 | pool에서 명시적으로 제거 + connection draining | 제거 중 backend의 기존 연결을 설정 시간 동안 유지 | 문서화된 connection drain이 필수인 운영 요구에 비교 | Gateway 설정 변경 권한·시간·동시 수정, affinity 예외·timeout |
-| 별도 port/JVM blue-green | 초기 검토 대안 | 사용자 결정으로 제외 | 현재 채택 후보가 아님 |
 
 probe 실패는 pool 구성에서 backend를 제거하는 것과 다르다. 따라서 marker 파일 제거만으로 Azure의 connection draining timeout이 적용된다고 가정하지 않는다. [Probe 동작](https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-probe-overview)
 명시적 drain에도 gateway-managed affinity 요청의 예외가 있으며, 설정 변경은 drain timeout 이후 연결을 종료할 수 있다. 장기 다운로드·WebSocket/SSE의 수명과 재접속 정책을 확인해야 한다. [Backend HTTP settings](https://learn.microsoft.com/en-us/azure/application-gateway/configuration-http-settings)
 
-파일럿 권장: 파일 기반 방식의 가능성을 dev에서 먼저 시험한다. 기존 요청 무손실을 입증하지 못하면 명시적 pool 제거와 connection drain 대안을 비교한다. 별도 port JVM 병행은 사용자 결정으로 제외한다. 증적 없이 '무중단 보장'으로 승인하지 않는다.
+파일럿 권장: 파일 기반 방식의 가능성을 dev에서 먼저 시험한다. 기존 요청 무손실을 입증하지 못하면 명시적 pool 제거와 connection drain 대안을 비교한다. 별도 port JVM 병행은 현재 검토 대상에서 제외한다. 증적 없이 '무중단 보장'으로 승인하지 않는다.
 
 ## 2. 사용자가 제안한 파일 방식
 

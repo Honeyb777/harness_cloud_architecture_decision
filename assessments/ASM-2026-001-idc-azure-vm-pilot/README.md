@@ -25,13 +25,23 @@ Tomcat은 다른 port의 병행 JVM 없이 rolling하며, JWT Cookie를 사용�
 - [현재 환경 및 미확인 항목](context.md)
 - [요구사항](requirements.md)
 - [OIDC·권한·승인 및 runner 대안](designs/identity-and-delivery-options.md)
+- [GitHub repository 권한·Azure Identity 거버넌스 선택안](designs/github-access-and-identity-governance-options.md)
 - [drain·Tomcat·Vue·동시 배포 제어](designs/availability-and-rollout-options.md)
 - [Blob·Artifacts·Actions Cache·이미지 및 비용](designs/artifact-and-build-options.md)
+- [CI/CD 단계와 runner·GHCR·ACR build image 선택](designs/ci-cd-stages-and-build-image-options.md)
+- [Build cache·GitHub Packages·배포 release 생명주기](designs/build-cache-and-release-lifecycle-options.md)
+- [CD 순차 제어·runner 대기·Azure OIDC 준비](designs/cd-sequencing-and-azure-oidc-preparation.md)
+- [CD 운영 모델: 중앙 자동 조정 / 개별 수동 조정](designs/cd-operation-model-options.md)
+- [VM 배포 전송 모델: 직접 push / 명령 push·파일 pull](designs/server-deployment-transport-options.md)
+- [Tomcat rollout: same-port drain 후 교체](designs/tomcat-rollout-model-options.md)
+- [Frontend 정적 자산: 단일 slot / hash 자산 2버전 공존](designs/frontend-static-asset-rollout-options.md)
 - [공식 출처](evidence/official-sources.md)
 - [파일럿 검증 계획](evidence/pilot-validation-plan.md)
 - [결정 목록](decisions/README.md)
 - [중간 요약](reports/executive-brief.md)
 - [배포 절차 초안](reports/deployment-draft.md)
+- [의사결정 1장 요약 (HTML)](reports/decision-summary-one-page.html)
+- [상세 의사결정 보고서 (HTML)](reports/decision-detail.html)
 - [역할 평가](evaluations/2026-09-07-discovery.md)
 - [이력](history/2026-09.md)
 
@@ -55,8 +65,9 @@ INTAKE는 대상·목적·미확인 항목이 식별되어 완료했다. DISCOVE
 
 ## 다음 확인
 
-1. GitHub 조직·배포 저장소 경계와 Azure tenant/subscription/RG, dev/prod 서버 쌍 매핑.
+1. GitHub 조직·source/배포 저장소 경계, 실제 team·repository role과 Azure tenant/subscription/RG, dev/prod 서버 쌍 매핑.
 2. Blob/Key Vault의 공용·사설 접근 정책 및 현재 App Gateway의 서비스별 pool/settings/probe 연결.
 3. JWT 서명·검증키 일관성, WebSocket/장시간 요청, 1대 수용 용량, 배포 버전 보존 개수와 복구 기준.
 
 후속 기록: [사용자 결정](decisions/DEC-2026-003-hosted-only-scope.md), [역할 평가](evaluations/2026-09-07-hosted-followup.md), [배포 절차 초안](reports/deployment-draft.md).
+- [Azure Pipelines를 CD 조정기로 사용하는 선택지](designs/azure-pipelines-cd-option.md)

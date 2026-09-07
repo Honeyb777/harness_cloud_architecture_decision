@@ -22,6 +22,9 @@
 | REQ-16 | 빌드 runner 추가 모듈 및 GitHub image/GHCR/ACR 필요성 비교 | runner/image 비교 |
 | REQ-17 | 정적 slot·파일 포인터 전환 및 두 VM 일괄 적용 한계 | static 전환 |
 | REQ-18 | DB/API 버전 공존 위험 수용 방향 반영 | DEC-2026-003 |
+| REQ-19 | JDK·Node·추가 CLI 버전을 고정한 build container image를 GHCR 또는 ACR에서 관리 | CI/CD build image 결정 |
+| REQ-20 | Azure VM 배포에서 직접 push와 명령 push·파일 pull 전송 모델을 비교·선택 | DEC-2026-007 |
+| REQ-21 | Frontend 정적 자산에서 단일 slot 영향 수용 또는 hash/version 자산 2버전 공존을 선택 | DEC-2026-008 |
 
 ## 설계에서 도출한 수용 조건 — 확정 전 제안
 
@@ -31,3 +34,4 @@
 - HTTP 성공, JWT 키 일관성, 지연, WebSocket, 프론트 chunk 404를 시험한다. DB/API 공존은 수용 위험으로 기록하고 영향·복구 가능성을 관측한다. 호환성 재설계 완료를 이번 구성의 강제 선행 조건으로 삼지 않는다.
 - 단기 인증은 장기 비밀값 제거를 뜻한다. Azure RBAC 할당의 자동 만료나 모든 기존 제품의 비밀번호 제거를 뜻하지 않는다.
 - 사용자 트래픽 무중단의 정확한 정의와 허용 지연·오류·세션 영향 수치는 미확인이다.
+| REQ-22 | GitHub Actions CI를 유지하면서 Azure Pipelines를 CD 조정기로만 추가하는 선택지와, 대기열·승인·잠금·비용·drain 책임 경계를 비교 | Azure Pipelines CD option |

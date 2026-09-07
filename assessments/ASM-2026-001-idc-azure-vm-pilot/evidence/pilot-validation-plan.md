@@ -56,4 +56,30 @@ Status: NOT_RUN. 공식 문서 확인과 문서 정합성 검사는 실제 환�
 | VAL-30 | 정적 current 교체·재실행·한쪽 실패 | VM 내 공백 없는 pointer 전환, 양 VM 자산 접근, 불일치 검출/복구 |
 | VAL-31 | 자율 pull을 선택할 경우 | 양 VM 독립 restart 방지, 승인 manifest만 적용, poller 중복/실패/재개 검증 |
 
+## CI 시간·저장소 측정 — NOT_RUN
+
+| ID | 시험 | 기록할 값 |
+|---|---|---|
+| VAL-32 | private GHCR 또는 ACR build image pull | image digest·크기, pull 경과 시간, runner OS/region, 실패·재시도 |
+| VAL-33 | Actions Cache hit/miss와 GitHub Packages dependency fetch | cache restore/save, install, build/test 시간을 구분하고 lockfile key·용량 기록 |
+| VAL-34 | Artifacts·Blob release 처리 | upload/download/publish 시간, 파일 크기, retention·보호 상태, runner 실행 분 |
+
+| VAL-35 | CD concurrency와 Environment 대기 | 같은 pair group의 `queue: max` 순차 실행, pending/approval/runner-step lock wait별 job execution·billable minutes 비교 |
+| VAL-36 | 교차 repository·수동 배포 경합 | 중앙 deployment repository와 pair lock을 우회한 동시 VM drain·Run Command가 차단 또는 HOLD되는지 확인 |
+| VAL-37 | Azure OIDC 허용·거부 | 올바른 prod repo/Environment만 해당 deployer identity로 login, 다른 repo/branch/Environment는 거부 |
+
+VAL-35~37은 실제 repository·Environment·Azure scope가 정해진 뒤 실행한다. 문서의 concurrency/OIDC 구조는 실제 실행·과금·RBAC 증적을 대체하지 않는다.
+
+VAL-32~34는 registry 또는 cache가 runner 시간을 없앤다는 가정을 검증하기 위한 비용·운영 측정이다. 결과를 받기 전에는 GHCR, ACR, cache 또는 Artifacts의 비용 우위를 확정하지 않는다.
+
 VAL-12/19는 DB/API 공존에 대한 사용자 위험 수용을 반영한 관측 항목이다. 실제 시험 결과나 수용 범위가 없는 오류를 통과로 기록하지 않는다.
+## Azure Pipelines CD 선택 시 추가 검증 — 모두 NOT_RUN
+
+| ID | 시나리오 | 통과 조건 |
+|---|---|---|
+| VAL-38 | 서로 다른 source service의 Azure Pipelines CD 요청 | 같은 Azure DevOps Environment exclusive lock과 `sequential` 설정에서 한 deployment stage만 실행되고 순서가 기록됨 |
+| VAL-39 | approval 거절·timeout·lock 대기·Pipeline 취소 | VM drain, Run Command, VM 2 배포가 시작되지 않거나 중단/HOLD 상태가 추적됨 |
+| VAL-40 | Pipeline이 VM 1 배포 중 drain/readiness 실패 | VM 2 stage가 실행되지 않고 같은 release의 rollback 또는 HOLD 증적이 남음 |
+| VAL-41 | Azure Pipelines 무료 구간의 대기·실행 시간 | approval/lock wait, agentless validation, 실제 deployment job 시간을 분리해 1,800분 및 병렬 job 사용량과 billing 화면에 기록 |
+
+Azure Pipelines exclusive lock은 Azure DevOps Environment를 사용하는 Pipeline stage의 실행 순서를 제어하는 기능이다. Application Gateway connection draining, Nginx readiness marker, VM 외부 수동 변경과 잔류 Run Command를 대체하는 검증으로 해석하지 않는다.

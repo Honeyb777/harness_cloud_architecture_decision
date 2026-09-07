@@ -33,6 +33,10 @@ DECIDED
 
 위 추천은 사용자 확정과 구분한다. push/pull 최종 방식, Blob 공개 데이터 엔드포인트 허용 여부, VNet hosted larger runner, 보존 개수, 운영 승인자 및 잠금 구현은 미확정이다.
 
+## Tomcat rollout 선택 상태
+
+same-port drain 후 Tomcat 교체를 적용한다. 별도 port JVM 병행은 현재 검토·설계 대상에서 제외한다. marker/probe는 신규 요청 제외 수단이며, 기존 연결 drain·Tomcat warm-up·VM1/VM2 순차 배포는 실제 검증 전 완료로 표시하지 않는다. 상세 절차는 [same-port rollout](../designs/tomcat-rollout-model-options.md)을 따른다.
+
 ## Implemented Reality
 
 문서 반영만 수행했다. Azure/GitHub 구성 적용·배포·기존 IDC 도구 삭제는 수행하지 않았다.
