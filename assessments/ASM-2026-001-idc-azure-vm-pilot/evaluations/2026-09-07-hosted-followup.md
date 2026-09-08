@@ -75,6 +75,8 @@ Frontend B안의 release 경로·asset URL·두 VM 순서·cleanup 예시를 Dev
 
 - Historian / Reporter: 충족. 공유 VM CD 리포트는 잠금·순차 실행과 Gateway/Nginx/Tomcat traffic 전환을 별도 흐름으로 설명하고, 선택지·권장안·미결정 값·실제 적용 미수행을 본문에 포함했다.
 
+- Historian / Reporter: 충족. Microsoft 제품 소개·도입 협의 질문지 v2는 보고서 다섯 종류의 순서를 유지하고, 비기술 참여자를 위해 용어 전체 이름·한글 뜻·주제별 목적을 질문 앞에 배치했다. 면접형 평가나 내부 결정 강요 대신 제품 설명·시연·도입 조건 확인으로 표현했다.
+
 ## Azure Pipelines CD 선택지 검토
 
 - DevOps / Operations: 충족. Azure Pipelines Environment approval·exclusive lock의 배포 조정 역할과 Application Gateway drain·VM 순차 전환의 runtime 역할을 분리했다.

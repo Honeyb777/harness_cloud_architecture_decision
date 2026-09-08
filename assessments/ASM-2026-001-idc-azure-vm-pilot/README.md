@@ -42,6 +42,7 @@ Tomcat은 다른 port의 병행 JVM 없이 rolling하며, JWT Cookie를 사용�
 - [중간 요약](reports/executive-brief.md)
 - [배포 절차 초안](reports/deployment-draft.md)
 - [Microsoft 협의용 질문 목록](reports/ms-meeting-question-list.md)
+- [Microsoft 제품 소개·도입 협의 질문지 v2](reports/ms-product-introduction-question-list-v2.md)
 - [GitHub Enterprise Cloud 권한·배포 보호 모델](reports/github-enterprise-cloud-access-model.md)
 - [GitHub Actions CI 빌드·산출물·Azure OIDC 운영 모델](reports/github-actions-ci-model.md)
 - [GitHub Actions CD와 Azure Pipelines CD: 공유 이중화 VM 배포 운영 모델](reports/github-actions-cd-shared-vm-model.md)
