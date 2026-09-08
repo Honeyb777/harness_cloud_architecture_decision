@@ -87,3 +87,7 @@
 | S66 | [Azure Pipelines GitHub repositories](https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops) | GitHub source repository trigger |
 | S67 | [Azure Pipelines manual validation](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/manual-validation-v0?view=azure-pipelines) | YAML agentless job에서의 수동 검증 대기 |
 | S68 | [Application Gateway features](https://learn.microsoft.com/en-us/azure/application-gateway/features) | backend traffic에 대한 connection draining 역할 |
+| S69 | [GitHub Actions OIDC](https://docs.github.com/en/actions/reference/security/oidc) | job별 `id-token: write`, repository·branch·Environment claim 조건 |
+| S70 | [Azure Login with OpenID Connect](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect) | Entra application/UAMI federated credential와 GitHub Actions Azure login |
+| S71 | [GitHub dependency caching](https://docs.github.com/en/actions/reference/workflows-and-actions/dependency-caching) | repository별 기본 10 GB, 7일 미접근 cache 정리와 cache 보안 주의 |
+| S72 | [GitHub Actions artifact retention](https://docs.github.com/en/enterprise-cloud@latest/organizations/managing-organization-settings/configuring-the-retention-period-for-github-actions-artifacts-and-logs-in-your-organization) | private/internal repository artifact·log 기본 90일 및 1~400일 설정 범위 |

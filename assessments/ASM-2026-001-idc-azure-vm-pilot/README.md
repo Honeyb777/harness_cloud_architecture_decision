@@ -29,6 +29,7 @@ Tomcat은 다른 port의 병행 JVM 없이 rolling하며, JWT Cookie를 사용�
 - [drain·Tomcat·Vue·동시 배포 제어](designs/availability-and-rollout-options.md)
 - [Blob·Artifacts·Actions Cache·이미지 및 비용](designs/artifact-and-build-options.md)
 - [CI/CD 단계와 runner·GHCR·ACR build image 선택](designs/ci-cd-stages-and-build-image-options.md)
+- [GitHub Actions CI: build·cache·artifact·release publish 권한 모델](designs/github-actions-ci-build-and-publish-model.md)
 - [Build cache·GitHub Packages·배포 release 생명주기](designs/build-cache-and-release-lifecycle-options.md)
 - [CD 순차 제어·runner 대기·Azure OIDC 준비](designs/cd-sequencing-and-azure-oidc-preparation.md)
 - [CD 운영 모델: 중앙 자동 조정 / 개별 수동 조정](designs/cd-operation-model-options.md)
@@ -42,6 +43,8 @@ Tomcat은 다른 port의 병행 JVM 없이 rolling하며, JWT Cookie를 사용�
 - [배포 절차 초안](reports/deployment-draft.md)
 - [Microsoft 협의용 질문 목록](reports/ms-meeting-question-list.md)
 - [GitHub Enterprise Cloud 권한·배포 보호 모델](reports/github-enterprise-cloud-access-model.md)
+- [GitHub Actions CI 빌드·산출물·Azure OIDC 운영 모델](reports/github-actions-ci-model.md)
+- [GitHub Actions CD와 Azure Pipelines CD: 공유 이중화 VM 배포 운영 모델](reports/github-actions-cd-shared-vm-model.md)
 - [Azure 관리·Identity·권한 모델](reports/azure-management-and-identity-model.md)
 - [GitHub-Azure OIDC 연결·사용 모델](reports/github-azure-oidc-integration.md)
 - [의사결정 1장 요약 (HTML)](reports/decision-summary-one-page.html)
@@ -75,3 +78,4 @@ INTAKE는 대상·목적·미확인 항목이 식별되어 완료했다. DISCOVE
 
 후속 기록: [사용자 결정](decisions/DEC-2026-003-hosted-only-scope.md), [역할 평가](evaluations/2026-09-07-hosted-followup.md), [배포 절차 초안](reports/deployment-draft.md).
 - [Azure Pipelines를 CD 조정기로 사용하는 선택지](designs/azure-pipelines-cd-option.md)
+- [GitHub Actions CD: 공유 이중화 VM·Application Gateway 배포 모델](designs/github-actions-cd-shared-vm-model.md)

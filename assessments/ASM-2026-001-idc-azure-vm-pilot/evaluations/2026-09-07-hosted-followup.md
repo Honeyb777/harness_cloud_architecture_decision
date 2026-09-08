@@ -62,6 +62,19 @@ Frontend B안의 release 경로·asset URL·두 VM 순서·cleanup 예시를 Dev
 - Historian / Reporter: 충족. 두 HTML 보고서를 저장소 내부 문서 링크 없이 읽을 수 있게 고치고, 권장안·미정 정책·실제 적용/검증 미수행 상태를 본문에 분리했다.
 - Reviewer: 보완 필요. 배포·VM 전달·frontend asset의 흐름 그림은 비교 이해를 돕지만 실제 환경 동작을 증명하지 않는다. VM/Gateway/network/runtime 사실 확인 및 Pilot 검증이 후속 조건이다.
 - 후속 조치: 보고서 수신자의 질문과 선택 결과를 받은 뒤 해당 결정 기록과 Pilot 증적을 갱신한다.
+## GitHub Actions CI 독립 리포트 검토
+
+- Historian / Reporter: 충족. CI 범위를 build image·cache·Artifacts·Blob release 원본·OIDC publisher로 한정하고, 선택지·권장안·미결정 값·실제 적용 미수행을 한 문서 안에 분리했다. 내부 결정 코드와 내부 상대 링크는 본문에서 제외하고 공식 공개 문서 링크만 근거로 제시했다.
+- DevOps / Security / Data / FinOps: 보완 필요. GHCR/ACR 실제 pull, cache cold/warm 시간, Artifact 보존, Blob upload 및 OIDC 거부 경로는 모두 NOT_RUN이다. 실제 registry, Blob lifecycle, release Environment, custom role 가능 여부를 확정한 뒤 Pilot 증적을 추가해야 한다.
+
+## 공유 이중화 VM CD 초안 검토
+
+- DevOps / Operations: 충족. GitHub Actions 단독 CD와 Azure Pipelines CD의 조정 책임을 비교하고, 어느 쪽도 Gateway drain·Tomcat 전환·readiness를 대신하지 않는다는 경계를 명시했다. shared pair에서 다른 서비스가 두 VM을 동시에 제외하지 않도록 pair 단위 queue/lock·peer Healthy·VM1 이후 VM2 조건을 추가했다.
+- Security / Network / Data: 보완 필요. GitHub OIDC와 Azure DevOps service connection federation은 별도 trust로 검증해야 하며, Run Command·VM Managed Identity Blob pull, probe·connection draining, private network와 checksum 검증은 모두 NOT_RUN이다.
+- Reviewer: 보완 필요. Vue versioned asset 2버전 공존은 이전 HTML의 chunk 요청을 보호하는 설계이며, 실제 asset URL·cache header·session 보존 기간은 frontend 구현과 Pilot 증적으로 확인해야 한다.
+
+- Historian / Reporter: 충족. 공유 VM CD 리포트는 잠금·순차 실행과 Gateway/Nginx/Tomcat traffic 전환을 별도 흐름으로 설명하고, 선택지·권장안·미결정 값·실제 적용 미수행을 본문에 포함했다.
+
 ## Azure Pipelines CD 선택지 검토
 
 - DevOps / Operations: 충족. Azure Pipelines Environment approval·exclusive lock의 배포 조정 역할과 Application Gateway drain·VM 순차 전환의 runtime 역할을 분리했다.

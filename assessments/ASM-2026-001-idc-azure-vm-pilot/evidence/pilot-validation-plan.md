@@ -83,3 +83,24 @@ VAL-12/19는 DB/API 공존에 대한 사용자 위험 수용을 반영한 관측
 | VAL-41 | Azure Pipelines 무료 구간의 대기·실행 시간 | approval/lock wait, agentless validation, 실제 deployment job 시간을 분리해 1,800분 및 병렬 job 사용량과 billing 화면에 기록 |
 
 Azure Pipelines exclusive lock은 Azure DevOps Environment를 사용하는 Pipeline stage의 실행 순서를 제어하는 기능이다. Application Gateway connection draining, Nginx readiness marker, VM 외부 수동 변경과 잔류 Run Command를 대체하는 검증으로 해석하지 않는다.
+
+## GitHub Actions CI build/publish 모델 추가 검증 — 모두 NOT_RUN
+
+| ID | 시나리오 | 통과 조건 |
+|---|---|---|
+| VAL-42 | private GHCR 또는 ACR build image pull | 허용된 CI job만 고정 digest를 pull하며, 권한 없는 repository/job은 pull할 수 없음 |
+| VAL-43 | Actions Cache cold/warm build | cache hit/miss의 restore·install·build 시간을 분리 기록하고, cache miss에서도 lockfile 기준 build/test 성공 |
+| VAL-44 | Artifact와 Blob release 경계 | Artifacts 만료와 무관하게 release manifest·checksum이 Blob 원본과 일치하며, 동일 release ID overwrite가 차단됨 |
+| VAL-45 | Blob publisher OIDC subject | 허용된 release tag/Environment만 login·publish에 성공하고, 다른 repo/branch/Environment는 거절됨 |
+| VAL-46 | CI identity 최소 권한 | CI publisher가 VM Run Command, Application Gateway 변경, Key Vault secret read를 수행할 수 없음 |
+
+## 공유 이중화 VM CD 모델 추가 검증 — 모두 NOT_RUN
+
+| ID | 시나리오 | 통과 조건 |
+|---|---|---|
+| VAL-47 | 서로 다른 서비스의 동시 CD 요청 | 같은 VM pair에서는 하나의 배포만 drain·VM 변경을 수행하고, 다음 요청은 queue/lock에서 대기 또는 HOLD됨 |
+| VAL-48 | peer VM 비정상 상태 | peer가 Gateway Healthy가 아니거나 상태 Unknown이면 대상 VM marker off와 배포가 시작되지 않음 |
+| VAL-49 | marker·probe·Tomcat 순차 전환 | marker off, Gateway Unhealthy, 기존 요청 기준 충족, 같은 port Tomcat 교체, readiness, Healthy 순서가 증적으로 남음 |
+| VAL-50 | GitHub Actions와 Azure Pipelines CD 비교 | 두 조정 방식에서 승인·대기·lock·실행 시간과 실제 VM 절차가 분리되어 기록됨 |
+| VAL-51 | Blob pull 배포 방식 | 직접 push와 Run Command push + VM MI Blob pull의 network·identity·실패 복구 조건을 비교 검증 |
+| VAL-52 | Vue 이전 asset 보호 | VM1/VM2 순차 전환 중 이전·새 versioned asset URL이 모두 200이며 cleanup이 current/previous/in-flight를 삭제하지 않음 |
